@@ -1,4 +1,4 @@
-﻿Stop-Process -Name CMBPBHK -Force -ErrorAction SilentlyContinue
+Stop-Process -Name CMBPBHK -Force -ErrorAction SilentlyContinue
 
 $CMB_FILES = @(
 "$Env:SystemRoot\SysWOW64\HKHttpComm.dll"
