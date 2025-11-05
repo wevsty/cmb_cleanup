@@ -1,3 +1,5 @@
+﻿
+# Keep empty line
 Add-Type @"
 using System;
 using System.Text;
@@ -26,9 +28,18 @@ public class PFRO
 }
 "@
 
-Stop-Process -Name PersonalBankPortal -Force -ErrorAction SilentlyContinue
+function Remove-Items {
+    param (
+        [string[]]$Items
+    )
 
-$CMB_FILES = @(
+    foreach ($Item in $Items) {
+        Remove-Item -Path $Item -Force -Recurse -ErrorAction SilentlyContinue
+		Write-Output "Remove: $Item"
+    }
+}
+
+$CMB_CLIENT_FILE_ITEMS = @(
 "$Env:SystemRoot\SysWOW64\CMBRes"
 "$Env:SystemRoot\SysWOW64\PBHttpComm.dll"
 "$Env:SystemRoot\SysWOW64\PersonalBankPortal.exe"
@@ -57,7 +68,7 @@ $CMB_FILES = @(
 "$Env:USERPROFILE\CMB"
 )
 
-$CMB_REGISTRY_ITEMS = @(
+$CMB_CLIENT_REGISTRY_ITEMS = @(
 "HKCR:\CMBPB"
 "HKCR:\Interface\{15D2AB7C-A76C-41F4-812E-D6502C505B1D}"
 "HKCR:\Interface\{629101D6-1715-40CB-88B6-44BB8F5165A6}"
@@ -83,15 +94,22 @@ $CMB_REGISTRY_ITEMS = @(
 "HKLM:\System\CurrentControlSet\Services\CMBProtector"
 )
 
-Foreach($CMB_FILE_PATH in $CMB_FILES)  
-{  
-     Remove-Item -Path $CMB_FILE_PATH -Force -Recurse -ErrorAction SilentlyContinue
-}
+$CMB_SAFE_EDIT_FILE_ITEMS = @(
+"$Env:SystemRoot\SysWOW64\CMBEdit.dll"
+"$env:ProgramFiles(x86)\InstallShield Installation Information\{BFB8DF2C-170D-4A5D-9AFE-4307B09448A8}"
+)
 
-Foreach($CMB_REGISTRY_PATH in $CMB_REGISTRY_ITEMS)  
-{  
-     Remove-Item -Path $CMB_REGISTRY_PATH -Force -Recurse -ErrorAction SilentlyContinue
-}
+$CMB_SAFE_EDIT_REGISTRY_ITEMS = @(
+"HKLM:\SOFTWARE\Classes\TypeLib\{C4DB7141-5F89-4D2F-9CBD-062377F9BB63}"
+"HKLM:\SOFTWARE\Classes\WOW6432Node\CLSID\{0CA54D3F-CEAE-48AF-9A2B-31909CB9515D}"
+"HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{BFB8DF2C-170D-4A5D-9AFE-4307B09448A8}"
+)
+
+Stop-Process -Name PersonalBankPortal -Force -ErrorAction SilentlyContinue
+Remove-Items -Items $CMB_CLIENT_FILE_ITEMS
+Remove-Items -Items $CMB_CLIENT_REGISTRY_ITEMS
+Remove-Items -Items $CMB_SAFE_EDIT_FILE_ITEMS
+Remove-Items -Items $CMB_SAFE_EDIT_REGISTRY_ITEMS
 
 $CMB_DRIVERS = @(
 "$Env:SystemRoot\SysWOW64\drivers\CMBProtector.dat"
