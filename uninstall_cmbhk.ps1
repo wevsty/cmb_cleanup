@@ -57,7 +57,7 @@ $CMB_CLIENT_FILE_ITEMS = @(
 
 $CMB_SAFE_EDIT_FILE_ITEMS = @(
 "$Env:SystemRoot\SysWOW64\CMBEdit.dll"
-"$env:ProgramFiles(x86)\InstallShield Installation Information\{BFB8DF2C-170D-4A5D-9AFE-4307B09448A8}"
+"$Env:ProgramFiles(x86)\InstallShield Installation Information\{BFB8DF2C-170D-4A5D-9AFE-4307B09448A8}"
 )
 
 $CMB_SAFE_EDIT_REGISTRY_ITEMS = @(
