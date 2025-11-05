@@ -1,5 +1,5 @@
-﻿
-# Keep empty line
+$PSDefaultParameterValues['*:Encoding'] = 'utf8'
+
 function Remove-Items {
     param (
         [string[]]$Items

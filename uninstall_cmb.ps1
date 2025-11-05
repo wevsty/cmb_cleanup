@@ -1,5 +1,5 @@
-﻿
-# Keep empty line
+$PSDefaultParameterValues['*:Encoding'] = 'utf8'
+
 Add-Type @"
 using System;
 using System.Text;
